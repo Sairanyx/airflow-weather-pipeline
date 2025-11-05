@@ -64,7 +64,7 @@ The pipeline extracts, transforms, validates, and loads data into a structured d
 - Set up the GitHub repository and project structure  
 - Installed & configured required libraries (Kaggle API, Pandas, SQLite3, Airflow)  
 - Implemented the Extract step (Kaggle API, ZIP handling, XCom)  
-- Developed the main Validation
+- Contributed to late Validation
 - Created and wrote this README.md
 
 **Zoi Theofilakou** 
