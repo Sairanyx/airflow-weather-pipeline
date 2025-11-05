@@ -11,7 +11,7 @@
 ## 🚀 Project Overview
 
 This Introduction to Data Engineering group work project focuses on an automated **ETL pipeline** built with **Apache Airflow** for processing historical weather data from Kaggle.  
-The pipeline extracts, transforms, validates, and loads data into a structured databas and demonstrates Airflow features such as **XCom** and **trigger rules**.
+The pipeline extracts, transforms, validates, and loads data into a structured database and demonstrates Airflow features such as **XCom** and **trigger rules**.
 
 ---
 

@@ -1,0 +1,23 @@
+# Core ETL libraries
+
+pandas==2.2.2
+numpy==1.26.4
+
+# Database
+
+SQLAlchemy==2.0.31
+
+# Airflow & dependencies
+
+apache-airflow==2.9.2
+apache-airflow-providers-sqlite==3.6.0
+apache-airflow-providers-common-sql==1.13.0
+
+# Kaggle API for dataset download
+
+kaggle==1.6.14
+
+# Utility libraries
+
+python-dotenv==1.0.1
+pathlib==1.0.1

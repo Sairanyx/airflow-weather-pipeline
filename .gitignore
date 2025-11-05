@@ -1,0 +1,37 @@
+# Byte-compiled / cache files
+
+__pycache__/
+*.pyc
+
+# Virtual environment
+
+.env/
+venv/
+.venv/
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Databases and generated data
+
+database/*.db
+data/processed/*
+data/raw/*
+
+# Airflow logs and temporary files
+
+logs/
+airflow_home/
+*.log
+
+# Screenshots, large binary files
+
+screenshots/*
+reports/*.pptx
+reports/*.pdf
+
+# VS Code settings (optional)
+
+.vscode/
