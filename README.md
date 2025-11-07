@@ -1,4 +1,4 @@
-# 🌦️ Airflow ETL Pipeline for Historical Weather Data
+# Airflow ETL Pipeline for Historical Weather Data
 
 **Team:**  
 
@@ -8,21 +8,21 @@
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 
 This Introduction to Data Engineering group work project focuses on an automated **ETL pipeline** built with **Apache Airflow** for processing historical weather data from Kaggle.  
 The pipeline extracts, transforms, validates, and loads data into a structured database and demonstrates Airflow features such as **XCom** and **trigger rules**.
 
 ---
 
-## 🧠 Dataset
+## Dataset
 
 **Source:** [Kaggle - Weather History](https://www.kaggle.com/datasets)  
 **File:** `weatherHistory.csv.zip`  
 
 ---
 
-## ⚙️ ETL Steps
+## ETL Steps
 
 ### 1️⃣ Extract  
 
@@ -49,7 +49,7 @@ The pipeline extracts, transforms, validates, and loads data into a structured d
 - Creates an SQLite database
 - Loads the daily & monthly data into tables  
 
-### 5️⃣ Orchestrate (Airflow DAG)  
+### 5️⃣ Orchestration (Airflow DAG)  
 
 - Defines all the ETL tasks and dependencies  
 - Uses XCom for the task communication  
@@ -57,7 +57,7 @@ The pipeline extracts, transforms, validates, and loads data into a structured d
 
 ---
 
-## 🤝 Team Roles And Contributions
+## Team Roles And Contributions
 
 **Eduard Rednic**  
 
@@ -81,7 +81,7 @@ The pipeline extracts, transforms, validates, and loads data into a structured d
 
 ---
 
-## 📸 Submission files
+## Submission files
 
 - Python script (ETL and Airflow DAG)  
 - Database screenshots (daily & monthly tables)  
@@ -90,31 +90,43 @@ The pipeline extracts, transforms, validates, and loads data into a structured d
 
 ---
 
-## 🧩 Tools
+## Tools
 
 Python • Pandas • Airflow • SQLite • Kaggle API • Git • Ubuntu/Linux • Visual Studio Code
 
 ---
 
+## Folder Structure
+
 ## 📂 Folder Structure
 
 ```text
-airflow-weather-pipeline/
-├── dags/
-│   └── etl_weather.py
-├── data/
-│   ├── raw/
-│   └── processed/
-├── database/
+airflow-weather-pipeline
+├── dags
+│   └── etl_weather_dags.py
+│
+├── scripts
+│   ├── __init__.py
+│   ├── extract.py
+│   ├── transform.py
+│   ├── validate.py
+│   └── load.py
+│
+├── data
+│   ├── raw
+│   └── processed
+│
+├── database
 │   └── weather_data.db
-├── screenshots/
-│   ├── airflow_ui.png
-│   └── database_tables.png
-├── reports/
+│
+├── screenshots
+│
+├── reports
 │   ├── Final_Report_DE_Eduard_Rednic.pdf
 │   ├── Final_Report_DE_Zoi_Theofilakou.pdf
 │   ├── Final_Report_DE_Iuliia_Radionova.pdf
 │   └── DE_presentation.pptx
-├── README.md
+│
 ├── requirements.txt
+├── README.md
 └── .gitignore
