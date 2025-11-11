@@ -53,18 +53,6 @@ def extract_task(ti):
 
 # Defining the Transforming task
 
-def transform_task(ti):
-
-    # Pulling the file path from XCom
-
-    extracted_path = ti.xcom_pull(key="extracted_path", task_ids="extract_weather")
-    processed_path, daily_path, monthly_path = transform_weather(extracted_path)
-
-    # Pushing the two file paths ti XCom
-
-    ti.xcom_push(key="daily_weather", value=daily_path)
-    ti.xcom_push(key="monthly_weather", value=monthly_path)
-    print(f" Successfully pulled the path and got the file from extract: {extracted_path}")
 
 # Defining the Validation task
 
