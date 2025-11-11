@@ -17,7 +17,7 @@ import sys, pathlib
 
 sys.pth.append(str(pathlib.Path(__file__).resolve().parents[1]))
 
-# Connecting the extract script to this one
+# Connecting the extract script to this script
 
 from scripts.extract import download_weather_dataset
 
@@ -62,5 +62,6 @@ def validate_task(ti):
 
 
 
+# Stream
 
 extract >> transform >> validate >> load
