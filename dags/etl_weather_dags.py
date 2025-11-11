@@ -1,7 +1,8 @@
 # The DAG automates the ETL process for the Weather History dataset.
 
 # Steps:
-# 1. Extracts, Downloads and Unzips the dataset from Kaggle using the Kaggle API.
+# 1. Extracts, downloads and unzips the dataset from Kaggle using the Kaggle API.
+# 3. Validates, checks that the daily and monthly files exist and meet requirements.
 
 
 
@@ -22,21 +23,9 @@ from scripts.extract import download_weather_dataset
 
 # Setting Default arguements
 
-DEFAULT_ARGS = {
-    "owner": "-",
-    "retries": 0,
-}
 
 # Setting the DAG
 
-dag = DAG(
-    dag_id="weather_etl",
-    default_args=DEFAULT_ARGS,
-    start_date=datetime(2024, 1, 1),
-    schedule_interval=None,
-    cacthup=False,
-    tags=["weather", "etl"],
-)
 
 # Defining the Extracting task
 
