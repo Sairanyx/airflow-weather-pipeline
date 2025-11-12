@@ -1,4 +1,3 @@
-# Purpose: 
 # - Download a Kaggle dataset (ZIP)
 # - Unzip it to a temporary folder
 # - Picking a CSV
