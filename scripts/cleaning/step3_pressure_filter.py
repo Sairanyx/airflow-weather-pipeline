@@ -1,26 +1,19 @@
 def filter_invalid_pressure(df):
     """
-    Step 3: Filter out rows with invalid pressure values.
+    Step 3: Remove rows with invalid pressure values.
 
-    define valid range:
+    Valid range:
         870 <= Pressure (millibars) <= 1100
 
-    Range filter  is applied 
-
-    Based on output:
-        - 1288 rows contained invalid pressure values.
-        - These rows must be removed to ensure accurate analysis
-          in later Feature Engineering steps (daily/monthly aggregates).
-
-    
+    Based on the exploratory analysis, 1288 rows fall outside this
+    physical range. These rows are removed to ensure reliable
+    daily and monthly aggregations in later steps.
 
     Returns:
-        DataFrame with valid pressure values only.
+        Cleaned DataFrame containing only valid pressure values.
     """
-
     df = df[
         (df["Pressure (millibars)"] >= 870) &
         (df["Pressure (millibars)"] <= 1100)
     ]
-
     return df
