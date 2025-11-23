@@ -3,8 +3,8 @@ import pandas as pd
 
 def set_datetime_index(df):
     """
-    Convert 'Formatted Date' to datetime and set it as index.
-    Required for resampling and period operations. 
+    Convert 'Formatted Date' to datetime and set it as index,sort.
+    Required for all time-based operations (resampling, grouping, monthly periods). 
     """
     df["Formatted Date"] = pd.to_datetime(df["Formatted Date"], errors="coerce")
     df = df.set_index("Formatted Date")
