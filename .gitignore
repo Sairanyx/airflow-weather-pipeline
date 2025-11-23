@@ -16,10 +16,19 @@ database/*.db
 data/processed/*
 data/raw/*
 
+# Auto-generated output files from Transform step
+reports/*.csv
+data/processed/*.csv
+
 # Downloads and temporary extracted files
 data/downloads/
 data/downloads/*
 data/downloads/temporary/
+
+
+# Kaggle dataset download (large file, recreated by Extract task)
+*.zip
+
 
 # Airflow logs and temporary files
 logs/

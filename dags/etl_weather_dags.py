@@ -166,7 +166,7 @@ validate_monthly_op = PythonOperator(
     python_callable=validate_monthly_task,
     dag=dag,
 )
-
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # TEMPORARY placeholders until Edward & Iulia finish
 dummy_outliers = EmptyOperator(
     task_id="detect_outliers",
@@ -179,7 +179,7 @@ dummy_load = EmptyOperator(
 )
 
 
-
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 
