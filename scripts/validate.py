@@ -110,4 +110,29 @@ def validate_monthly(csv_path):
     print("[MONTHLY] MONTHLY DATASET VALID ✔")
     return True
 
+# ------------------------------------------------------------
+# AUTO-DETECT VALIDATION (required for test_validate_autodetect.py)
+# ------------------------------------------------------------
+
+def validate_weather(csv_path):
+    """
+    Automatically detect whether the dataset is daily or monthly
+    and run the corresponding validation function.
+    """
+
+    df = pd.read_csv(csv_path)
+
+    # Detect DAILY
+    if {"Formatted Date", "avg_temp", "avg_humidity", "avg_wind_speed"}.issubset(df.columns):
+        return validate_daily(csv_path)
+
+    # Detect MONTHLY
+    if {"YearMonth", "avg_temp", "avg_humidity", "avg_wind_speed",
+        "avg_visibility", "avg_pressure", "Mode Precip Type"}.issubset(df.columns):
+        return validate_monthly(csv_path)
+
+    # Unknown dataset type
+    raise ValueError("Cannot autodetect dataset type (daily/monthly).")
+
+
 
