@@ -1,44 +1,82 @@
-# Byte-compiled / cache files
+# Python
+
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
 
-# Virtual environment
-.env/
+# Virtual environments
+
 venv/
+.env/
 .venv/
 
-# OS files
+# Jupyter
+
+.ipynb_checkpoints/
+
+# Airflow
+
+airflow/airflow.db
+airflow/airflow-worker.pid
+airflow/airflow.cfg
+airflow/webserver_config.py
+airflow/logs/
+airflow/plugins/__pycache__/
+
+# SQLite DBs created by pipeline
+
+database/*.db
+database/*.sqlite
+*.db
+
+# XCom / temp Airflow files
+
+xcom/
+*__temp__
+
+
+# Kaggle Downloads
+
+downloads/
+*_dataset.zip
+*.zip
+
+# Raw and processed data
+
+data/raw/
+data/processed/
+data/temp/
+
+
+# OS / Editor noise
+
 .DS_Store
 Thumbs.db
 
-# Databases and generated data
-database/*.db
-data/processed/*
-data/raw/*
 
-# Auto-generated output files from Transform step
-reports/*.csv
-data/processed/*.csv
+# VSCode / IDE
 
-# Downloads and temporary extracted files
-data/downloads/
-data/downloads/*
-data/downloads/temporary/
+.vscode/
+.idea/
 
 
-# Kaggle dataset download (large file, recreated by Extract task)
-*.zip
+# Git metadata backups
+
+*.orig
 
 
-# Airflow logs and temporary files
+# Logs
+
 logs/
-airflow_home/
 *.log
 
-# Screenshots, large binary files
-screenshots/*
-reports/*.pptx
-reports/*.pdf
 
-# VS Code settings
-.vscode/
+# Compiled artifacts
+
+build/
+dist/
+*.egg-info/
+
