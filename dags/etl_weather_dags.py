@@ -324,29 +324,33 @@ Validation = PythonOperator(
 
 Create_table = PythonOperator(
     task_id="Create_tables",
-    python_callable=create_tables,
+    python_callable=create_tables_wrapper,
     dag=dag,
 )
 
-Load_daily_data = PythonOperator(
+load_daily_data = PythonOperator(
     task_id="Load_daily_data",
-    python_callable=load_data,
+    python_callable=load_data_wrapper,
     op_kwargs={
         "table_name" : "daily_weather",
-        "xcom_key" : d_path,
-        "source_task_id" : "Transform"
+        "xcom_key" : "daily_weather",
+        "source_task_id" : "Transform",
+        "rename_mapping_type": "Daily"
     },
+    provide_context=True,
     dag=dag,
 )
 
-Load_monthly_data = PythonOperator(
+load_monthly_data = PythonOperator(
     task_id="Load_monthly_data",
-    python_callable=load_data,
+    python_callable=load_data_wrapper,
     op_kwargs={
         "table_name" : "monthly_weather",
-        "xcom_key" : m_path,
-        "source_task_id" : "Transform"
+        "xcom_key" : "monthly_weather",
+        "source_task_id" : "Transform",
+        "rename_mapping_type" : "Monthly"
     },
+    provide_context=True,
     dag=dag,
 )
 
