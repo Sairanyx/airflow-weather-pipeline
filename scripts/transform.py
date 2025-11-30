@@ -37,7 +37,8 @@ def transform_weather_data(df_raw):
     )
 
     # ---------- 3. SAVE CSV FILES ----------
-    output_folder = "/home/zoi/airflow-weather-pipeline/reports"
+    output_folder = "/home/iuliia/airflow/dags/airflow-weather-pipeline/data/downloads"
+    #"/home/zoi/airflow-weather-pipeline/reports"
     os.makedirs(output_folder, exist_ok=True)
 
     daily_path = f"{output_folder}/daily_weather.csv"
