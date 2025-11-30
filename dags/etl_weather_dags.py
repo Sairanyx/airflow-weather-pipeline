@@ -286,7 +286,6 @@ load_daily_data = PythonOperator(
         "source_task_id" : "Transform",
         "rename_mapping_type": "Daily"
     },
-    provide_context=True,
     dag=dag,
 )
 
@@ -299,7 +298,6 @@ load_monthly_data = PythonOperator(
         "source_task_id" : "Transform",
         "rename_mapping_type" : "Monthly"
     },
-    provide_context=True,
     dag=dag,
 )
 
