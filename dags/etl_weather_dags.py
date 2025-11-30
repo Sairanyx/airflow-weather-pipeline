@@ -9,27 +9,24 @@
 
 # Importing Libraries
 import sys
-sys.path.append("/home/iuliia/airflow-weather-pipeline")
+import os
 
-from datetime import datetime,timedelta
-import sqlite3
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+from airflow import DAG
 from datetime import datetime, timedelta
 import pandas as pd
-from airflow import DAG
 from airflow.operators.python import PythonOperator
 from scripts.validate import validate_daily, validate_monthly
 from airflow.operators.empty import EmptyOperator
 from airflow.utils.trigger_rule import TriggerRule
-import sys, pathlib
-import pandas as pd
 
 
-
-transform = None
-load_data = None
-create_tables = None
-d_path = None
-m_path = None
+# Setting Default arguements
 
 default_args = {
     'owner': 'Group 7',
@@ -39,43 +36,22 @@ default_args = {
     'depends_on_past': False
 }
 
+# Setting the DAG
 dag = DAG(
-    "etl_weather_dags",
+    "weather_history_etl",
     default_args=default_args,
     schedule_interval='@daily',
-    catchup=False
-)
-
-# Making sure importing from root is possible by all here
-
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1]))
-
-# Connecting the extract script to this script
-
-from scripts.extract import download_weather_dataset
-
-# Setting Default arguements
-
-default_args ={
-    "owner": "zoi, eduard, iuliia",
-    "start_date": datetime(2024,12,1),
-    "retries": 2,
-    "retry_delay": timedelta(minutes=2)
-}
-
-# Setting the DAG
-
-dag = DAG(
-    dag_id="weather_history_etl",
-    default_args=default_args,
-    schedule_interval=None,  
     catchup=False,
     description="ETL pipeline for Weather History dataset"
 )
 
+
 # Defining the Extracting task
 
 def extract_task(ti):
+
+    # Connecting the extract script to this script
+    from scripts.extract import download_weather_dataset
 
     # Extracting
 
@@ -158,52 +134,6 @@ def validate_monthly_task(ti):
     validate_monthly(monthly_path)
     print("[DAG] MONTHLY validation completed ✔")
 
-# Defining the Load task
-
-
-
-
-
-
-
-# Task objects
-
-extract = PythonOperator(
-    task_id= "Extract",
-    python_callable=extract_task,
-    dag=dag
-)
-
-transform = PythonOperator(
-    task_id="Transform",
-    python_callable=transform_task,
-    dag=dag
-)
-
-validate_daily_op = PythonOperator(
-    task_id="validate_daily",
-    python_callable=validate_daily_task,
-    dag=dag,
-)
-
-validate_monthly_op = PythonOperator(
-    task_id="validate_monthly",
-    python_callable=validate_monthly_task,
-    dag=dag,
-)
-
-detect_outliers_op = PythonOperator(
-    task_id="detect_outliers",
-    python_callable=detect_outliers_task,
-    dag=dag
-)
-
-# TEMPORARY placeholders until Iuliia finish
-
-dummy_load = EmptyOperator(
-    task_id="Load",
-    dag=dag
-)
 
 # Setting task for outlier detection, daily or monthly dataset
 # Tries daily then monthly
@@ -288,41 +218,60 @@ validate_daily   validate_monthly   detect_outliers  (parallel)
 
 """
 
-# Join validation (waits until all succeed)
 
-from airflow.operators.empty import EmptyOperator
-from airflow.utils.trigger_rule import TriggerRule
-
-join_validation = EmptyOperator(
-    task_id="join_validation",
-    trigger_rule=TriggerRule.ALL_SUCCESS,
-    dag=dag
-)
 
 # Stream
 
+# Defining the Load task
+def create_tables_wrapper():
+    from scripts.load import create_tables
+    create_tables()
+
+def load_data_wrapper(**kwargs):
+    from scripts.load import load_data
+    load_data(**kwargs)
+
 # Tasks definition
 
-Extract = PythonOperator(
+extract = PythonOperator(
     task_id="Extract",
     python_callable=extract_task,
     dag=dag,
 )
 
-Transform = PythonOperator(
+transform = PythonOperator(
     task_id="Transform",
-    python_callable=transform,
+    python_callable=transform_task,
+    provide_context=True,
     dag=dag,
 )
 
-Validation = PythonOperator(
-    task_id="Validation",
-    python_callable=validate_task,
-    trigger_rule="all_success",
+
+validate_daily_op = PythonOperator(
+    task_id="Validate_daily",
+    python_callable=validate_daily_task,
     dag=dag,
 )
 
-Create_table = PythonOperator(
+validate_monthly_op = PythonOperator(
+    task_id="Validate_monthly",
+    python_callable=validate_monthly_task,
+    dag=dag,
+)
+
+detect_outliers_op = PythonOperator(
+    task_id="Detect_outliers",
+    python_callable=detect_outliers_task,
+    dag=dag
+)
+
+join_validation = EmptyOperator(
+    task_id="Join_validation",
+    trigger_rule=TriggerRule.ALL_SUCCESS,
+    dag=dag
+)
+
+create_table = PythonOperator(
     task_id="Create_tables",
     python_callable=create_tables_wrapper,
     dag=dag,
@@ -355,5 +304,4 @@ load_monthly_data = PythonOperator(
 )
 
 
-Extract >> Transform >> Validation >> Create_table >> Load_daily_data >> Load_monthly_data
-# extract >> transform >> [validate_daily_op, validate_monthly_op, detect_outliers] >> join_validation >> dummy_load
+extract >> transform >> [validate_daily_op, validate_monthly_op, detect_outliers_op] >> join_validation >> create_table >> [load_daily_data, load_monthly_data]
