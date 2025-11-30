@@ -1,16 +1,21 @@
 import os
-from scripts.cleaning.step1_date_cleaning import clean_date_column
-from scripts.cleaning.step2_missing_erroneous import handle_missing_and_erroneous
-from scripts.cleaning.step3_pressure_filter import filter_invalid_pressure
-from scripts.cleaning.step4_duplicates import remove_duplicates
+import sys
 
-from scripts.feature_engineering.part_1_daily_features import compute_daily_averages
-from scripts.feature_engineering.part_2_precip_mode import monthly_precip_mode
-from scripts.feature_engineering.part_3_wind_strength import wind_categorization
-from scripts.feature_engineering.part_4_monthly_features import monthly_averages
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
+if script_dir not in sys.path:
+    sys.path.insert(0, script_dir)
 
 def transform_weather_data(df_raw):
+    from cleaning.step1_date_cleaning import clean_date_column
+    from cleaning.step2_missing_erroneous import handle_missing_and_erroneous
+    from cleaning.step3_pressure_filter import filter_invalid_pressure
+    from cleaning.step4_duplicates import remove_duplicates
+
+    from feature_engineering.part_1_daily_features import compute_daily_averages
+    from feature_engineering.part_2_precip_mode import monthly_precip_mode
+    from feature_engineering.part_3_wind_strength import wind_categorization
+    from feature_engineering.part_4_monthly_features import monthly_averages
 
     # ---------- 1. DATA CLEANING ----------
     df_clean = clean_date_column(df_raw)
