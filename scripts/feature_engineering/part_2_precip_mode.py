@@ -1,5 +1,5 @@
 import pandas as pd
-from scripts.feature_engineering.part_1_daily_features import set_datetime_index
+from .part_1_daily_features import set_datetime_index
 
 def monthly_precip_mode(df):
 
